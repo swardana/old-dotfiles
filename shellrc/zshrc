@@ -1,0 +1,15 @@
+# $HOME/.zshrc
+
+# load all files from .dotfiles/shellrc/zshrc.d directory
+if [ -d $HOME/.dotfiles/shellrc/zshrc.d ]; then
+  for file in $HOME/.dotfiles/shellrc/zshrc.d/*.zsh; do
+    source $file
+  done
+fi
+
+# load all files from .dotfiles/shellrc/rc.d directory
+if [ -d $HOME/.dotfiles/shellrc/rc.d ]; then
+  for file in $HOME/.dotfiles/shellrc/rc.d/*.sh; do
+    source $file
+  done
+fi
