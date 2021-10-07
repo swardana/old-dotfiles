@@ -1,0 +1,6 @@
+# load all files from .dotfiles/shellrc/login.d directory
+if [ -d $HOME/.dotfiles/shellrc/login.d ]; then
+  for file in $HOME/.dotfiles/shellrc/login.d/*.sh; do
+    source $file
+  done
+fi
