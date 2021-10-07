@@ -1,0 +1,7 @@
+# Sukma's Shell Runtime Configuration
+
+Directory structure for my shell dotfiles that works like `conf.d`.
+
+## See
+
+- https://chr4.org/posts/2014-09-10-conf-dot-d-like-directories-for-zsh-slash-bash-dotfiles/ which this was modeled after
