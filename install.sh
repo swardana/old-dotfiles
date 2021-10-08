@@ -73,7 +73,7 @@ for item in bin/* ; do
 done
 
 echo "Setting up git..."
-cp "$BASEDIR/.gitconfig.base" "$HOME/.gitconfig"
+cp "$BASEDIR/git/gitconfig.base" "$HOME/.gitconfig"
 
 if which git-lfs >/dev/null 2>&1 ; then
   git lfs install
