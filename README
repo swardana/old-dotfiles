@@ -1,3 +1,15 @@
 # Sukma's Dotfiles and Vim config
 
 These are my dotfiles. There are many like them, but there are mine. This started around 2017 or so when I used lots of different machines and environments. Now I mostly use macOS and Linux, but still keep the environment in sync.
+
+## Installation
+
+1. `curl -sL https://raw.githubusercontent.com/swardana/dotfiles/master/install.sh | bash`
+2. `chsh` or otherwise set your shell to use http://www.zsh.org/
+3. Restart your shell
+
+Optionally create a `.postinstall` with some machine-specific commands, like `git config --global user.email "my-work-email@example.com"`". You can also create a `.vimlocal` and `.gvimlocal` for machine-specific Vim customizations.
+
+## See also
+
+- https://github.com/statico/dotfiles which this was modeled after
