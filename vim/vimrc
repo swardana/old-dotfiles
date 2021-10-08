@@ -1,0 +1,190 @@
+" Sukma Wardana vimrc.
+" Requires Vim 7.0 or newer.
+
+" Set an environment variable for the user runtime directory.
+if !exists('$MYVIMRUNTIME')
+  if has('win32') || has('win64')
+    let $MYVIMRUNTIME = expand('~/vimfiles')
+  else
+    let $MYVIMRUNTIME = expand('~/.vim')
+  endif
+endif
+
+" Support older version of Vim that don't have autocmd.
+if has('autocmd')
+  let g:maplocalleader = ','
+  filetype plugin indent on  " Auto detect filetype by filename extension and contents.
+endif
+
+" Indent wrapped lines if supported.
+if exists('+breakindent')
+  set breakindent
+endif
+
+" Add completion options.
+if exists('+completeopt')
+  set completeopt+=longest  " Insert longest common substring.
+  set completeopt+=menuone  " Show the menu even if only one match.
+endif
+
+" Use UTF-8 if we can and env LANG didn't tell us not to.
+if has('multi_byte') && !exists('$LANG') && &encoding ==# 'latin1'
+  set encoding=utf-8
+endif
+
+" Don't load GUI menus; set here before GUI starts.
+if has('gui_running')
+  set guioptions+=M
+endif
+
+" No terminal mouse, even if we could.
+" The manual says to set 't_RV', but I don't like that.
+if exists('+ttymouse') && &ttymouse !=# ''
+  set ttymouse=
+endif
+
+" Options dependent on the syntax feature.
+if has('syntax')
+  " Use syntax highlighting.
+  if !exists('g:syntax_on')
+    syntax enable
+  endif
+
+  " Use colorscheme if using the GUI or have 256 colors.
+  if has('gui_running') || &t_Co >= 256
+    silent! colorscheme mustang
+  endif
+
+  " If colorscheme not found, then default with dark background.
+  if !exists('g:colors_name')
+    set background=dark
+  endif
+endif
+
+" The all-important default indent settings; filetypes to tweak.
+set autoindent     " Use indent of previous line on new lines.
+set expandtab      " Use spaces instead of tabs.
+set shiftwidth=4   " Indent with four spaces.
+set softtabstop=4  " Insert four spaces with tab key.
+
+" Let me backspace over pretty much anything.
+set backspace+=eol     " Line breaks.
+set backspace+=indent  " Spaces from 'autoindent'.
+set backspace+=start   " The start of current insertion.
+
+" Prefer unix
+set fileformats+=unix
+set fileformats+=dos
+set fileformats+=mac
+
+" Refresh when a file is change from the outside.
+set autoread
+
+" Give a prompt instead of just rejecting risky :write, :saveas.
+set confirm
+
+" Allow buffers to have changes without being displayed.
+set hidden
+
+" Keep much more command and search history.
+set history=2000
+
+" Wildmenu settings; see also plugin/wildignore.vim.
+set wildmenu               " Use wildmenu.
+set wildmode=list:longest  " Tab press completes and lists.
+
+" Highlight completed searches; clear on reload.
+set hlsearch
+if 1
+  nohlsearch
+endif
+
+" Show search matches as I type my pattern.
+set incsearch
+
+" Don't redraw the screen during batch execution.
+set lazyredraw
+
+" Break lines at word boundaries.
+set linebreak
+
+" Display row/col and percentage.
+set ruler
+
+" Display relative line numbers.
+set relativenumber
+
+" Don't allow setting options via buffer content.
+set nomodeline
+
+" Use 80 text width column.
+set textwidth=80
+set colorcolumn=80
+
+" Treat numbers with a leading zero as decimal, not octal.
+set nrformats-=octal
+
+" Prefix wrapped rows with three dots
+set showbreak=...
+
+" No flashing or beeping at all.
+set visualbell t_vb=
+
+" Define extra 'list' display characters.
+set listchars+=extends:>   " Unwrapped text to screen right.
+set listchars+=precedes:<  " Unwrapped text to screen left.
+set listchars+=tab:>-      " Tab characters, preserve width.
+set listchars+=trail:_     " Trailing spaces.
+set listchars+=nbsp:+      " Non-breaking spaces.
+
+" Turn off backup, most stuff on source control.
+set nobackup
+set nowritebackup
+set noswapfile
+set noundofile     " Vim 7.3 have feature about persistent undo.
+
+" New window positioning.
+set splitbelow  " Below the current window, not above.
+set splitright  " Right of the current window, not left.
+
+" Disabled arrow key on normal and insert mode.
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+" Turn off linewise keys. Normally, the `j' and `k' keys move the cursor down one entire line.
+" With line wrapping on, this can cause the cursor to actually skip a few lines on the screen
+" because it's moving from line N to line N+1 in the file.
+" I want this to act more visually -- I want `down' to mean the next line on the screen.
+nmap j gj
+nmap k gk
+
+" Efficient command shortcut, e.g: ;w to save instead :w.
+nnoremap ; :
+
+" Window navigation with Ctrl + navigation. Instead Ctrl + w then h/j/k/l. Use Ctrl + h/j/k/l.
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>lp
+
+" Stack normal/visual/select Ctrl-L to clear search highlight.
+nnoremap <silent> <C-L> :<C-U>nohlsearch<CR><C-L>
+vnoremap <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
+
+" \ev Quick open vimrc file.
+nmap <silent> <Leader>ev :e $MYVIMRC<CR>
+
+" \sv Quick reload vimrc file.
+nmap <silent> <Leader>sv :so $MYVIMRC<CR>
+
+" Apply sudo (when forgot) editing privilege file with :w!!.
+cmap w!! w !sudo tee % >/dev/null
+
+" Source any .vim files from ~/.vim/config
+runtime! config/*.vim
