@@ -1,0 +1,28 @@
+#!/bin/bash
+# Deploy javaee war to glassfish application server
+#
+
+set -e
+
+GLASSFISH_HOME=/opt/glassfish5
+GLASSFISH_DOMAIN=domain1
+GLASSFISH_DEPLOY=$GLASSFISH_HOME/glassfish/domains/$GLASSFISH_DOMAIN/autodeploy
+GLASSFISH_BIN=$GLASSFISH_HOME/bin/asadmin
+
+WAR_FILE=./target/*.war
+
+if [[ ! -d "$GLASSFISH_DEPLOY" ]]; then
+  echo "$GLASSFISH_DEPLOY not found!"
+  exit 1
+fi
+
+if ! [ -f $WAR_FILE ]; then
+  echo "No target war file found (./target/*.war)"
+  exit 1
+fi
+
+rm -Rfv $GLASSFISH_DEPLOY/*
+
+cp $WAR_FILE $GLASSFISH_DEPLOY
+
+$GLASSFISH_BIN start-domain --verbose $GLASSFISH_DOMAIN
