@@ -1,0 +1,10 @@
+" Sukma Wardana gvimrc.
+" Requires Vim 7.0 or newer.
+
+" Reset GUI options.
+set guioptions=
+set guioptions+=a  " Use the system GUI clipboard.
+set guioptions+=c  " Use console dialogs, not popup windows.
+
+" Don't use the mouse
+set mouse=
