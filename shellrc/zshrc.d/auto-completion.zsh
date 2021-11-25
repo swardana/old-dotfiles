@@ -1,3 +1,6 @@
+# Include the zsh-completions to fpath
+fpath=($HOME/.dotfiles/.zsh-completions $fpath)
+
 # enable the famous zsh tab-completion system
 autoload -Uz compinit && compinit -i
 
