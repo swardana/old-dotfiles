@@ -56,6 +56,13 @@ echo "Updating common Zsh completions..."
 rm -rf .zsh-completions ~/.zcompdump; compinit
 git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
 
+echo "Create zsh-theme directory..."
+mkdir -p .zsh-theme
+
+echo "Downloading zsh powerlevel10k theme..."
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git
+.zsh-theme/powerlevel10k
+
 echo "Creating shell runtime configuration symlinks..."
 symlink "$BASEDIR/shellrc/bash_profile" "$HOME/.bash_profile"
 symlink "$BASEDIR/shellrc/bashrc" "$HOME/.bashrc"
